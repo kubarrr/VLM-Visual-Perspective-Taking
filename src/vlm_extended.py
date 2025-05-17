@@ -1,6 +1,7 @@
 """
 Extended Visual Language Model (VLM) that integrates an external vision model 
 and renderer for advanced spatial reasoning tasks. 
+It's main task is to answer spatial reasoning and vpt questions.
 """
 from src.utils.prompts import (
     EXTRACT_OBJECTS_TEMPLATE,
