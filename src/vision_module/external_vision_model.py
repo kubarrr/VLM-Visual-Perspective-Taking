@@ -1,3 +1,6 @@
+"""
+ExternalVisionModule is responsible for all scene abstraction flow. From raw image, to list of objects' poses (position + orientation)
+"""
 class ExternalVisionModule:
     """
     Stub for an external vision model.
