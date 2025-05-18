@@ -1,115 +1,65 @@
-"""
-Extended Visual Language Model (VLM) that integrates an external vision model 
-and renderer for advanced spatial reasoning tasks. 
-It's main task is to answer spatial reasoning and vpt questions.
-"""
-from src.utils.prompts import (
-    EXTRACT_OBJECTS_TEMPLATE,
-    PERSPECTIVE_CHANGE_TEMPLATE,
-    EGOCENTRIC_REPHRASING_TEMPATE,
-)
+from typing import List
+from abc import ABC, abstractmethod
 from src.utils.constants import PERSPECTIVE_TYPE
-from src.qwen_wrapper import QwenWrapper
-from src.vision_module.external_vision_model import ExternalVisionModule
-from src.render_module.renderer_module import Renderer
 
 
-class VLMExtended:
+class VLMExtended(ABC):
     """
-    Extended Visual Language Model (VLM) that incorporates an external vision model.
+    Abstract base class for Extended Visual Language Model (VLM).
+    Defines the interface for VLMs that integrate external vision and rendering modules.
     """
-
-    def __init__(
-        self,
-        vlm_path: str,
-        external_vision_module: ExternalVisionModule,
-        renderer_module: Renderer,
-        device: str,
-    ):
-        """
-        Args:
-            vlm_model: The base visual language model instance.
-            external_vision_model (ExternalVisionModel, optional): An external vision model instance.
-        """
-        self.vlm_path = vlm_path
-        self.vlm_model = QwenWrapper(vlm_path)
-        self.vlm_model.load()
-
-        # hold external modules
-        self.external_vision_model = external_vision_module or ExternalVisionModule()
-        self.renderer_module = renderer_module or Renderer()
-        self.current_task = None
-        self.conversation = []
-
     
-    def ask_question_with_perspective(self, 
-                                      question: str, 
-                                      perspective_type: PERSPECTIVE_TYPE) -> str:
+
+    @abstractmethod
+    def ask_question_with_perspective(
+        self, question: str, perspective_type: PERSPECTIVE_TYPE
+    ) -> str:
         """
-        All workflow to generate answer with external  tools 
+        Full workflow to generate an answer using external tools.
         Args:
             question (str): The input question.
-            perspective_type 
+            perspective_type (PERSPECTIVE_TYPE): The type of perspective (numerical or visual).
         Returns:
-            str: vlm answer.
-        """        
-        # 1. get objects in interest
-        objects = self.extract_objects_from_question(question)
-        
-        # 2. process with external module
-        scene = self.external_vision_model.abstract_scene(self.current_task, objects)
-        
-        # 3. convert question to egocentric
-        egocentric_question = self.rephrase_to_egocentric(question)
-        
-        # 4. generate perspective prompt
-        perspective_prompt = self.generate_perspective_prompt(egocentric_question=egocentric_question,
-                                                              scene_abstraction=scene,
-                                                              perspective_type=perspective_type)
-        
-        # 5. ask final question with auxilary perspective prompt
-        prompt = question + perspective_prompt
-        return self.vlm_model.generate(messages=[prompt])
-    
-    def extract_objects_from_question(self, question):
+            str: The VLM answer.
+        """
+        pass
+
+    @abstractmethod
+    def extract_objects_from_question(self, question: str) -> List[str]:
         """
         Extract objects mentioned in the question.
         Args:
             question (str): The input question.
         Returns:
-            list: List of extracted objects (dummy implementation).
+            list: List of extracted objects.
         """
-        message = {
-            "role": "user",
-            "content": [
-                {
-                    "type": "text",
-                    "text": EXTRACT_OBJECTS_TEMPLATE.format(question=question),
-                },
-            ],
-        }
-        return self.vlm_model.generate(messages=[message])
+        pass
 
-    def rephrase_to_egocentric(self, question) -> str:
+    @abstractmethod
+    def rephrase_to_egocentric(self, question: str) -> str:
         """
         Rephrase the question to an egocentric perspective.
         Args:
             question (str): The input question.
+        Returns:
+            str: The egocentric version of the question.
         """
         pass
 
-    def generate_perspective_prompt(self, 
-                                    egocentric_question: str, 
-                                    scene_abstraction: list,
-                                    perspective_type: PERSPECTIVE_TYPE):
+    @abstractmethod
+    def generate_perspective_prompt(
+        self,
+        egocentric_question: str,
+        scene_abstraction: list,
+        perspective_type: PERSPECTIVE_TYPE,
+    ) -> str:
         """
-        Generate a prompt for perspective-taking based on the question visual or numerical prompt.
+        Generate a prompt for perspective-taking based on the question and scene abstraction.
         Args:
-            question (str): The input question.
-            perspective_type: Numerical or visual
+            egocentric_question (str): The egocentric version of the question.
+            scene_abstraction (list): List of objects with positions and orientations.
+            perspective_type (PERSPECTIVE_TYPE): Numerical or visual.
         Returns:
-            str: The generated auxilary prompt.
+            str: The generated auxiliary prompt.
         """
         pass
-    
-    
