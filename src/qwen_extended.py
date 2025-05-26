@@ -7,7 +7,7 @@ It's main task is to answer spatial reasoning and vpt questions.
 from src.utils.prompts import (
     EXTRACT_OBJECTS_TEMPLATE,
     PERSPECTIVE_CHANGE_TEMPLATE,
-    EGOCENTRIC_REPHRASING_TEMPATE,
+    EGOCENTRIC_REPHRASING_TEMPLATE,
 )
 from src.qwen_wrapper import QwenWrapper
 from src.vision_module.external_vision_model import ExternalVisionModule
@@ -16,6 +16,7 @@ from src.vlm_extended import VLMExtended
 
 from src.utils.constants import PERSPECTIVE_TYPE
 from src.utils.logger import setup_logger
+from src.utils.utils import llm_output_to_list
 
 class QwenExtended(VLMExtended):
     """
@@ -85,7 +86,7 @@ class QwenExtended(VLMExtended):
         Args:
             question (str): The input question.
         Returns:
-            list: List of extracted objects (dummy implementation).
+            list: List of extracted objects.
         """
         message = {
             "role": "user",
@@ -96,7 +97,34 @@ class QwenExtended(VLMExtended):
                 },
             ],
         }
-        return self.vlm_model.generate(messages=[message])
+        answer = self.vlm_model.generate(messages=[message])[0]
+        objects = llm_output_to_list(answer)
+        if objects is None:
+            self.logger.error("Failed to extract objects from question.")
+            raise ValueError()
+        return objects
+    
+    
+    def find_perspective(self, question: str, options: list) -> str:
+        """
+        Find the perspective from which the question is asked.
+        Args:
+            question (str): The input question.
+            options (list): List of objects extracted from scene.
+        Returns:
+            str: The detected perspective.
+        """
+        message = {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": PERSPECTIVE_CHANGE_TEMPLATE.format(question=question, options=options),
+                },
+            ],
+        }
+        answer = self.vlm_model.generate(messages=[message])[0]
+        return answer
 
     def rephrase_to_egocentric(self, question) -> str:
         """
@@ -104,7 +132,18 @@ class QwenExtended(VLMExtended):
         Args:
             question (str): The input question.
         """
-        pass
+        message = {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": EGOCENTRIC_REPHRASING_TEMPLATE.format(question=question),
+                },
+            ],
+        }
+        egocentric_question = self.vlm_model.generate(messages=[message])[0]
+        return egocentric_question
+        
 
     def generate_perspective_prompt(self, 
                                     egocentric_question: str, 
