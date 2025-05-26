@@ -1,16 +1,27 @@
+
 """
 ExternalVisionModule is responsible for all scene abstraction flow. From raw image, to list of objects' poses (position + orientation)
 """
+import numpy as np
+from PIL import Image
+from typing import List
+
+from .grounding_dino_model import GroundingDINOModelWrapper
+from .sam_model import SAMModelWrapper
+from .depthpro_model import DepthProModelWrapper
+
 class ExternalVisionModule:
     """
-    Stub for an external vision model.
-    As we will, use many big models, which consumes a lot of memory, please make sure we can load / unload models dynamically 
-    before and after inference. (example approach in src/qwen_wrapper.py)
+    Refactored external vision model using modular model classes.
     """
 
-    def __init__(self, model_name: str = "GenericVisionModel"):
-        pass
-    def abstract_scene(self, img, objects) -> list:
+    def __init__(self, model_name: str = "GenericVisionModel", device: str = "cuda"):
+        self.device = device  # Let model classes handle device selection
+        self.dino = GroundingDINOModelWrapper(device=self.device)
+        self.sam = SAMModelWrapper(device=self.device)
+        self.depthpro = DepthProModelWrapper(device=self.device)
+
+    def abstract_scene(self, img: Image.Image, objects: List[str]) -> list:
         """
         ExternalVisionModule exposes single method for VLMExtended
         `abstract_scene` gets image and list of objects (e.g [woman, dog, chair])
@@ -24,5 +35,36 @@ class ExternalVisionModule:
                   later transform it into numerical or visual prompt (look paper)
         """
 
-        # TODO 
-        pass
+
+        # 1. Object detection with GroundingDINO
+        self.dino.load()
+        boxes, labels = self.dino.detect(img, objects)
+        self.dino.unload()
+        # 2. SAM masks
+        self.sam.load()
+        masks = self.sam.get_masks(img, boxes)
+        self.sam.unload()
+        # 3. Depth estimation
+        self.depthpro.load()
+        depth_map = self.depthpro.estimate_depth(img)
+        self.depthpro.unload()
+        # 4. Calculate coordinates
+
+        positions = []
+        masks_np = masks.cpu().numpy()
+        
+        masks_number, height, width = masks_np.shape
+        for mask_idx in range(masks_number):
+            xs, ys = np.nonzero(masks_np[mask_idx])
+            x_med, y_med = np.median(xs), np.median(ys)
+            
+            z_med = np.median(depth_map[masks_np[mask_idx]])   
+            
+            positions.append((float(x_med), float(y_med), float(z_med)))
+            
+        return {
+            "positions": np.asarray(positions), # [N x (y, x, z)]
+            "boxes": boxes,
+            "labels": labels,
+            "masks": masks
+        } 
