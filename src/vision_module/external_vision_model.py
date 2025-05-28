@@ -9,6 +9,7 @@ from typing import List
 from .grounding_dino_model import GroundingDINOModelWrapper
 from .sam_model import SAMModelWrapper
 from .depthpro_model import DepthProModelWrapper
+from .orient_anything_model import OrientAnythingModelWrapper
 
 class ExternalVisionModule:
     """
@@ -20,6 +21,7 @@ class ExternalVisionModule:
         self.dino = GroundingDINOModelWrapper(device=self.device)
         self.sam = SAMModelWrapper(device=self.device)
         self.depthpro = DepthProModelWrapper(device=self.device)
+        self.orient = OrientAnythingModelWrapper(device=device)
 
     def abstract_scene(self, img: Image.Image, objects: List[str]) -> list:
         """
@@ -48,7 +50,15 @@ class ExternalVisionModule:
         self.depthpro.load()
         depth_map = self.depthpro.estimate_depth(img)
         self.depthpro.unload()
-        # 4. Calculate coordinates
+        #4. Orient anything
+        self.orient.load()
+        orientations = self.orient.estimate_orientation(
+            img, boxes, masks=masks, depth_map=depth_map
+        )
+        self.orient.unload()
+
+        
+        # 5) Compute median positions
 
         positions = []
         masks_np = masks.cpu().numpy()
@@ -66,5 +76,6 @@ class ExternalVisionModule:
             "positions": np.asarray(positions), # [N x (y, x, z)]
             "boxes": boxes,
             "labels": labels,
-            "masks": masks
+            "masks": masks,
+            "orientations": orientations,
         } 
