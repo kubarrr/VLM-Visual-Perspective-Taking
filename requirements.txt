@@ -1,5 +1,5 @@
 git+https://github.com/huggingface/transformers 
-git+https://github.com/SpatialVision/Orient-Anything.git
+# git+https://github.com/SpatialVision/Orient-Anything.git # FixMe: does not work, github has to be cloned and remade so it will cooperate with Python
 huggingface_hub>=0.13.1
 accelerate
 torch>=2.0
