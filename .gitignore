@@ -8,6 +8,7 @@ src/render_module
 */refs/*
 *.safetensors
 models--facebook--dinov2-large/*
+models--Viglong--Orient-Anything/*
 */snapshots/*
 .locks
 *__pycache__*
