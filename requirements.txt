@@ -8,4 +8,4 @@ pillow>=8.0
 safetensors
 matplotlib>=3.0
 pytest>=7.0
-qwen-vl-utils[decord]==0.0.8
+# qwen-vl-utils[eva-decord]==0.0.8

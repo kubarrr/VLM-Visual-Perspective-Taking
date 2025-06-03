@@ -5,8 +5,8 @@ import torch
 from PIL import Image
 from transformers import AutoImageProcessor
 from huggingface_hub import hf_hub_download
-from vision_tower import DINOv2_MLP
-from inference import get_3angle
+from .orient_anything.vision_tower import DINOv2_MLP
+from .orient_anything.inference import get_3angle
 import numpy as np
 
 class OrientAnythingModelWrapper:
@@ -22,12 +22,12 @@ class OrientAnythingModelWrapper:
     def load(self):
         weight_path = hf_hub_download(
             repo_id=self.repo_id,
-            filename="croplargeEX2/dino_weight.pt"
+            filename="croplargeEX2/dino_weight.pt",
             cache_dir=self.cache_dir,
             repo_type="model",
         )
         self.dino_mlp = DINOv2_MLP(
-            dino_mode=self.model_size,
+            dino_mode="large",
             in_dim=1024,
             out_dim=self._OUT_DIM,
             evaluate=True,
@@ -52,7 +52,7 @@ class OrientAnythingModelWrapper:
             torch.cuda.empty_cache()
             gc.collect()
 
-    def estimate_orientation(self, img: Image.Image, boxes, masks=None):
+    def estimate_orientation(self, img: Image.Image, boxes):
         results = []
         for box in boxes:
             x0, y0, x1, y1 = map(int, box)

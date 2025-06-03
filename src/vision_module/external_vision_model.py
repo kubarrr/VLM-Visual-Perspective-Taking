@@ -53,7 +53,7 @@ class ExternalVisionModule:
         #4. Orient anything
         self.orient.load()
         orientations = self.orient.estimate_orientation(
-            img, boxes, masks=masks, depth_map=depth_map
+            img, boxes
         )
         self.orient.unload()
 
