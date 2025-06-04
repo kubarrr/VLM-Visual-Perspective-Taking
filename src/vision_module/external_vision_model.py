@@ -4,13 +4,13 @@ ExternalVisionModule is responsible for all scene abstraction flow. From raw ima
 """
 import numpy as np
 from PIL import Image
-from typing import List
+from typing import List, Optional
 
 from .grounding_dino_model import GroundingDINOModelWrapper
 from .sam_model import SAMModelWrapper
 from .depthpro_model import DepthProModelWrapper
 from .orient_anything_model import OrientAnythingModelWrapper
-
+from src.utils.utils import save_img_with_annotation
 class ExternalVisionModule:
     """
     Refactored external vision model using modular model classes.
@@ -23,7 +23,9 @@ class ExternalVisionModule:
         self.depthpro = DepthProModelWrapper(device=self.device)
         self.orient = OrientAnythingModelWrapper(device=device)
 
-    def abstract_scene(self, img: Image.Image, objects: List[str]) -> list:
+    def abstract_scene(self, img: Image.Image, 
+                       objects: List[str], 
+                       save_img_path: Optional[str] = None) -> list:
         """
         ExternalVisionModule exposes single method for VLMExtended
         `abstract_scene` gets image and list of objects (e.g [woman, dog, chair])
@@ -62,7 +64,6 @@ class ExternalVisionModule:
 
         positions = []
         masks_np = masks.cpu().numpy()
-        
         for m in masks_np:
             ys, xs = np.nonzero(m)
 
@@ -86,11 +87,13 @@ class ExternalVisionModule:
                 float(X_cam),
                 float(z_depth)
             ))
-            
-        return {
+        results = {
             "positions": np.asarray(positions), # [N x (y, x, z)]
             "boxes": boxes,
             "labels": labels,
             "masks": masks,
             "orientations": orientations,
         } 
+        if save_img_path:
+            save_img_with_annotation(img=img, res=results, save_path=save_img_path)
+        return results

@@ -1,13 +1,15 @@
 """
-Extended Visual Language Model (VLM) that integrates an external vision model 
-and renderer for advanced spatial reasoning tasks. 
+Extended Visual Language Model (VLM) that integrates an external vision model
+and renderer for advanced spatial reasoning tasks.
 It's main task is to answer spatial reasoning and vpt questions.
 """
 
+from PIL import Image
 from src.utils.prompts import (
     EXTRACT_OBJECTS_TEMPLATE,
     PERSPECTIVE_CHANGE_TEMPLATE,
     EGOCENTRIC_REPHRASING_TEMPLATE,
+    PERSPECTIVE_PROMPT_TEMPLATE,
 )
 from src.qwen_wrapper import QwenWrapper
 from src.vision_module.external_vision_model import ExternalVisionModule
@@ -16,7 +18,12 @@ from src.vlm_extended import VLMExtended
 
 from src.utils.constants import PERSPECTIVE_TYPE
 from src.utils.logger import setup_logger
-from src.utils.utils import llm_output_to_list
+from src.utils.utils import (
+    llm_output_to_list,
+    get_labels_positions_without_central,
+    change_points_basis,
+)
+
 
 class QwenExtended(VLMExtended):
     """
@@ -29,7 +36,7 @@ class QwenExtended(VLMExtended):
         external_vision_module: ExternalVisionModule,
         renderer_module: Renderer,
         device: str,
-        log_file: str
+        log_file: str,
     ):
         """
         Args:
@@ -38,8 +45,7 @@ class QwenExtended(VLMExtended):
         """
         self.device = device
         self.logger = setup_logger(__name__, log_file)
-            
-        
+
         self.vlm_path = vlm_path
         self.vlm_model = QwenWrapper(vlm_path, device=self.device, log_file=log_file)
         self.vlm_model.load()
@@ -50,36 +56,49 @@ class QwenExtended(VLMExtended):
         self.current_task = None
         self.conversation = []
 
-    
-    def ask_question_with_perspective(self, 
-                                      question: str, 
-                                      perspective_type: PERSPECTIVE_TYPE) -> str:
+    def ask_question_with_perspective(
+        self, question: str, img: Image, perspective_type: PERSPECTIVE_TYPE
+    ) -> str:
         """
-        All workflow to generate answer for spatial reasoning quesiton with external tools 
+        All workflow to generate answer for spatial reasoning quesiton with external tools
         Args:
             question (str): The input question.
-            perspective_type 
+            perspective_type
         Returns:
             str: vlm answer.
-        """        
+        """
         # 1. get objects in interest
         objects = self.extract_objects_from_question(question)
-        
+
         # 2. process with external module
-        scene = self.external_vision_model.abstract_scene(self.current_task, objects)
-        
+        scene = self.external_vision_model.abstract_scene(img=img, objects=objects)
+
         # 3. convert question to egocentric
         egocentric_question = self.rephrase_to_egocentric(question)
-        
+
+        # 4. extract central perspective
+        central_perspective = self.find_perspective(question=question, options=objects)
         # 4. generate perspective prompt
-        perspective_prompt = self.generate_perspective_prompt(egocentric_question=egocentric_question,
-                                                              scene_abstraction=scene,
-                                                              perspective_type=perspective_type)
-        
+        perspective_prompt = self.generate_perspective_prompt(
+            egocentric_question=egocentric_question,
+            scene_abstraction=scene,
+            central_perspective=central_perspective,
+            perspective_type=perspective_type,
+        )
+
         # 5. ask final question with auxilary perspective prompt
-        prompt = question + perspective_prompt
-        return self.vlm_model.generate(messages=[prompt])
-    
+        message = {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": perspective_prompt,
+                },
+            ],
+        }
+        # prompt = question + perspective_prompt
+        return self.vlm_model.generate(messages=[message])
+
     def extract_objects_from_question(self, question):
         """
         Extract objects mentioned in the question.
@@ -103,8 +122,7 @@ class QwenExtended(VLMExtended):
             self.logger.error("Failed to extract objects from question.")
             raise ValueError()
         return objects
-    
-    
+
     def find_perspective(self, question: str, options: list) -> str:
         """
         Find the perspective from which the question is asked.
@@ -119,7 +137,9 @@ class QwenExtended(VLMExtended):
             "content": [
                 {
                     "type": "text",
-                    "text": PERSPECTIVE_CHANGE_TEMPLATE.format(question=question, options=options),
+                    "text": PERSPECTIVE_CHANGE_TEMPLATE.format(
+                        question=question, options=options
+                    ),
                 },
             ],
         }
@@ -143,12 +163,14 @@ class QwenExtended(VLMExtended):
         }
         egocentric_question = self.vlm_model.generate(messages=[message])[0]
         return egocentric_question
-        
 
-    def generate_perspective_prompt(self, 
-                                    egocentric_question: str, 
-                                    scene_abstraction: list,
-                                    perspective_type: PERSPECTIVE_TYPE):
+    def generate_perspective_prompt(
+        self,
+        egocentric_question: str,
+        scene_abstraction: dict,
+        central_perspective: str,
+        perspective_type: PERSPECTIVE_TYPE,
+    ):
         """
         Generate a prompt for perspective-taking based on the question visual or numerical prompt.
         Args:
@@ -157,6 +179,30 @@ class QwenExtended(VLMExtended):
         Returns:
             str: The generated auxilary prompt.
         """
-        pass
-    
-    
+        labels_remaining, positions_remaining = get_labels_positions_without_central(
+            results=scene_abstraction, central_perspective=central_perspective
+        )
+        index_central_perspective = scene_abstraction["labels"].index(
+            central_perspective
+        )
+        translation, euler_angles = (
+            scene_abstraction["positions"][index_central_perspective],
+            scene_abstraction["orientations"][index_central_perspective, :3],
+        )
+
+        positions_egocentric_base = change_points_basis(
+            euler_angles=euler_angles,
+            translation=translation,
+            points=positions_remaining,
+        )
+
+        if perspective_type == PERSPECTIVE_TYPE.NUMERICAL:
+            coordinates_dict = {
+                label: row.round(2).tolist()
+                for label, row in zip(labels_remaining, positions_egocentric_base)
+            }
+
+            return PERSPECTIVE_PROMPT_TEMPLATE.format(
+                    source=central_perspective,
+                    coordinates=coordinates_dict,
+                    question=egocentric_question)
