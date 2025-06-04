@@ -9,6 +9,7 @@ from typing import List
 from .grounding_dino_model import GroundingDINOModelWrapper
 from .sam_model import SAMModelWrapper
 from .depthpro_model import DepthProModelWrapper
+from .orient_anything_model import OrientAnythingModelWrapper
 
 class ExternalVisionModule:
     """
@@ -20,6 +21,7 @@ class ExternalVisionModule:
         self.dino = GroundingDINOModelWrapper(device=self.device)
         self.sam = SAMModelWrapper(device=self.device)
         self.depthpro = DepthProModelWrapper(device=self.device)
+        self.orient = OrientAnythingModelWrapper(device=device)
 
     def abstract_scene(self, img: Image.Image, objects: List[str]) -> list:
         """
@@ -46,25 +48,49 @@ class ExternalVisionModule:
         self.sam.unload()
         # 3. Depth estimation
         self.depthpro.load()
-        depth_map = self.depthpro.estimate_depth(img)
+        depth_map, focal_length = self.depthpro.estimate_depth(img)
         self.depthpro.unload()
-        # 4. Calculate coordinates
+        #4. Orient anything
+        self.orient.load()
+        orientations = self.orient.estimate_orientation(
+            img, boxes
+        )
+        self.orient.unload()
+
+        
+        # 5) Compute median positions
 
         positions = []
         masks_np = masks.cpu().numpy()
         
-        masks_number, height, width = masks_np.shape
-        for mask_idx in range(masks_number):
-            xs, ys = np.nonzero(masks_np[mask_idx])
-            x_med, y_med = np.median(xs), np.median(ys)
-            
-            z_med = np.median(depth_map[masks_np[mask_idx]])   
-            
-            positions.append((float(x_med), float(y_med), float(z_med)))
+        for m in masks_np:
+            ys, xs = np.nonzero(m)
+
+            def image_to_camera_coords(x, y, z, f, w, h):
+                x_centered = x - (w / 2)
+                y_centered = -y + (h / 2)
+  
+                X = (x_centered * z) / f
+                Y = (y_centered * z) / f
+
+                return X, Y
+
+            w, h = img.size
+            f = focal_length
+            x_pixel, y_pixel = np.median(xs), np.median(ys)
+            z_depth = np.median(depth_map[m.astype(bool)])
+
+            X_cam, Y_cam = image_to_camera_coords(x_pixel, y_pixel, z_depth, f, w, h)
+            positions.append((
+                float(Y_cam),
+                float(X_cam),
+                float(z_depth)
+            ))
             
         return {
             "positions": np.asarray(positions), # [N x (y, x, z)]
             "boxes": boxes,
             "labels": labels,
-            "masks": masks
+            "masks": masks,
+            "orientations": orientations,
         } 

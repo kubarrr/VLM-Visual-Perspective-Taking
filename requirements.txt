@@ -1,3 +1,11 @@
 git+https://github.com/huggingface/transformers 
+# git+https://github.com/SpatialVision/Orient-Anything.git # FixMe: does not work, github has to be cloned and remade so it will cooperate with Python
+huggingface_hub>=0.13.1
 accelerate
-qwen-vl-utils[decord]==0.0.8
+torch>=2.0
+numpy>=1.21
+pillow>=8.0
+safetensors
+matplotlib>=3.0
+pytest>=7.0
+# qwen-vl-utils[eva-decord]==0.0.8

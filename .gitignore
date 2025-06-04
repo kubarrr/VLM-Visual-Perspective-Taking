@@ -1,0 +1,14 @@
+# Orient-Anything
+venv
+.venv
+src/render_module
+*.pyc
+*.lock
+*/blobs/*
+*/refs/*
+*.safetensors
+models--facebook--dinov2-large/*
+models--Viglong--Orient-Anything/*
+*/snapshots/*
+.locks
+*__pycache__*

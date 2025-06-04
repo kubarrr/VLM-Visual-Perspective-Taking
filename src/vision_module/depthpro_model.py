@@ -49,4 +49,4 @@ class DepthProModelWrapper:
             out, target_sizes=[(H, W)]
         )
         depth_map = results[0]["predicted_depth"].squeeze().cpu().numpy()
-        return depth_map
+        return depth_map, results[0]["focal_length"]
