@@ -226,7 +226,7 @@ class QwenExtended(VLMExtended):
             # however for vlm prompt we should change it to [x, y, z]
             # For now I change it here, but it might not be most elegant solution and I am happy to change it.
             coordinates_dict = {
-                label: [row[1].item(), row[0].item(), row[2].item()] # [y, x, z] -> [x, y, z]
+                label: [row[1].round(2).item(), row[0].round(2).item(), row[2].round(2).item()] # [y, x, z] -> [x, y, z]
                 for label, row in zip(labels_remaining, positions_egocentric_base)
             }
 
