@@ -83,6 +83,8 @@ class QwenExtended(VLMExtended):
         # 2. process with external module
         intermediate_save_path = os.path.join(self.output_folder, "intermediate.png") if save_intermediate else None
         scene = self.external_vision_model.abstract_scene(img=img, objects=objects, save_img_path=intermediate_save_path)
+
+        self.logger.info("Labels dino: %s", scene["labels"])
         self.logger.info(f"Scene abstraction finished")
 
         # 3. convert question to egocentric

@@ -12,3 +12,8 @@ models--Viglong--Orient-Anything/*
 */snapshots/*
 .locks
 *__pycache__*
+output_pipe
+output
+img0.png
+img20.png
+obrazek*
