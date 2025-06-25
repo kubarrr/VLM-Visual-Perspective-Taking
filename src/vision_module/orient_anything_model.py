@@ -8,6 +8,8 @@ from huggingface_hub import hf_hub_download
 from .orient_anything.vision_tower import DINOv2_MLP
 from .orient_anything.inference import get_3angle
 import numpy as np
+from scipy.spatial.transform import Rotation
+
 
 class OrientAnythingModelWrapper:
     _OUT_DIM = 360 + 180 + 180 + 2
@@ -66,4 +68,8 @@ class OrientAnythingModelWrapper:
     def estimate_orientation_just_image(self, img: Image.Image):
         print(img)
         angles = get_3angle(img, self.dino_mlp, self.processor, self.device)
-        return np.array(angles)
+        angles[0] = -angles[0] - 180
+        r = Rotation.from_euler("xyz", angles=angles[:3], degrees=True)
+        rotation_matrix = r.as_matrix()
+        new_positions = [0, 0, -1] @ rotation_matrix
+        return np.array(angles), new_positions
