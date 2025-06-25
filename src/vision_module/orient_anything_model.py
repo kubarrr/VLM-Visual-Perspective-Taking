@@ -57,6 +57,14 @@ class OrientAnythingModelWrapper:
         for box in boxes:
             x0, y0, x1, y1 = map(int, box)
             crop = img.crop((x0, y0, x1, y1)).convert("RGB")
+            crop.save("cropped_image.jpg")
             angles = get_3angle(crop, self.dino_mlp, self.processor, self.device)
+            # angles[0] = angles[0] + 180 if angles[0] < 180 else angles[0] - 180
+
             results.append(tuple(angles.cpu().tolist()))
         return np.array(results)
+    
+    def estimate_orientation_just_image(self, img: Image.Image):
+        print(img)
+        angles = get_3angle(img, self.dino_mlp, self.processor, self.device)
+        return np.array(angles)

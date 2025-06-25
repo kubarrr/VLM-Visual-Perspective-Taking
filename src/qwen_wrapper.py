@@ -24,8 +24,8 @@ class QwenWrapper:
             # attn_implementation="flash_attention_2",
             device_map="auto",
         )
-        if self.device != "cpu":
-            self.model.to(self.device)
+        # if self.device != "cpu":
+        #     self.model.to(self.device)
         self.logger.info(f"Model loaded to {self.device}.")
 
     def unload(self):
