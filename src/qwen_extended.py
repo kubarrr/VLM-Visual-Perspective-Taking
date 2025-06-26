@@ -108,15 +108,26 @@ class QwenExtended(VLMExtended):
         self.logger.info(f"Perspective prompt generated: {perspective_prompt}")
 
         # 5. ask final question with auxilary perspective prompt
+        tmp_img_path = os.path.join(self.output_folder, "_tmp.png")
+        img.save(tmp_img_path)
+        self.logger.info(f"Input image saved to temporary path: {tmp_img_path}")
         message = {
             "role": "user",
             "content": [
                 {
+                    "type": "image",
+                    "image": tmp_img_path,
+                },
+                {
+                    
                     "type": "text",
                     "text": perspective_prompt,
                 },
             ],
         }
+        # Remove the temporary image file after saving the path
+        if os.path.exists(tmp_img_path):
+            os.remove(tmp_img_path)
         # prompt = question + perspective_prompt
         # 6. get answer
         answer = self.vlm_model.generate(messages=[message])[0]
