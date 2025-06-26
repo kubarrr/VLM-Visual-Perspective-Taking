@@ -66,7 +66,7 @@ class QwenExtended(VLMExtended):
         question: str, 
         img: Image, 
         perspective_type: PERSPECTIVE_TYPE,
-        save_intermediate: bool,
+        save_intermediate_name: Optional[str] = None,
     ) -> str:
         """
         All workflow to generate answer for spatial reasoning quesiton with external tools
@@ -78,10 +78,12 @@ class QwenExtended(VLMExtended):
             str: vlm answer.
         """
         # 1. get objects in interest
+        self.logger.info("------------------------------------------")
+        self.logger.info(f"Processing question: {question}")
         objects = self.extract_objects_from_question(question)
         self.logger.info(f"Objects extracted from question: {objects}")
         # 2. process with external module
-        intermediate_save_path = os.path.join(self.output_folder, "intermediate.png") if save_intermediate else None
+        intermediate_save_path = os.path.join(self.output_folder, f"{save_intermediate_name}.png") if save_intermediate_name else None
         scene = self.external_vision_model.abstract_scene(img=img, objects=objects, save_img_path=intermediate_save_path)
 
         self.logger.info("Labels dino: %s", scene["labels"])
@@ -117,7 +119,7 @@ class QwenExtended(VLMExtended):
         }
         # prompt = question + perspective_prompt
         # 6. get answer
-        answer = self.vlm_model.generate(messages=[message])
+        answer = self.vlm_model.generate(messages=[message])[0]
         self.logger.info(f"Answer from VLM: {answer}")
         return answer
 
@@ -202,25 +204,29 @@ class QwenExtended(VLMExtended):
             str: The generated auxilary prompt.
         """
         # get labels and positions WITHOUT central_perspective object
-        labels_remaining, positions_remaining = get_labels_positions_without_central(
-            results=scene_abstraction, central_perspective=central_perspective
-        )
-        # extract index for central perspective object
-        index_central_perspective = scene_abstraction["labels"].index(
-            central_perspective
-        )
-    
-        translation, euler_angles = (
-            scene_abstraction["positions"][index_central_perspective],
-            scene_abstraction["orientations"][index_central_perspective, :3],
-        )
+        if central_perspective == "camera":
+            labels_remaining = scene_abstraction["labels"]
+            positions_egocentric_base = scene_abstraction["positions"]
+        else:
+            labels_remaining, positions_remaining = get_labels_positions_without_central(
+                results=scene_abstraction, central_perspective=central_perspective
+            )
+            # extract index for central perspective object
+            index_central_perspective = scene_abstraction["labels"].index(
+                central_perspective
+            )
+        
+            translation, euler_angles = (
+                scene_abstraction["positions"][index_central_perspective],
+                scene_abstraction["orientations"][index_central_perspective, :3],
+            )
 
-        # change basis of remaining points using central perspective as base
-        positions_egocentric_base = change_points_basis(
-            euler_angles=euler_angles,
-            translation=translation,
-            points=positions_remaining,
-        )
+            # change basis of remaining points using central perspective as base
+            positions_egocentric_base = change_points_basis(
+                euler_angles=euler_angles,
+                translation=translation,
+                points=positions_remaining,
+            )
 
         # numerical -> we feed new coordinates directly to prompt
         if perspective_type == PERSPECTIVE_TYPE.NUMERICAL:
