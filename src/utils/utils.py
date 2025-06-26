@@ -33,7 +33,8 @@ def change_points_basis(
         np.ndarray: points in new coordinate system
     """
     euler_angles[0] = euler_angles[0] - 180
-    r = Rotation.from_euler("yxz", angles=euler_angles[:3], degrees=True).inv()
+    euler_angles[1] = -euler_angles[1]
+    r = Rotation.from_euler("xyz", angles=euler_angles[:3], degrees=True)
     rotation_matrix = r.as_matrix()
     new_positions = (points - translation.reshape((1, -1))) @ rotation_matrix.T
     return new_positions

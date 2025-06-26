@@ -68,10 +68,10 @@ class OrientAnythingModelWrapper:
     def estimate_orientation_just_image(self, img: Image.Image):
         print(img)
         angles = get_3angle(img, self.dino_mlp, self.processor, self.device)
-        # angles = [90, 0, 0]
+        # angles = [180, -90, 0]
         angles[0] = angles[0] - 180
-        angles[1] = angles[1]
-        r = Rotation.from_euler("yxz", angles=angles[:3], degrees=True).inv()
+        angles[1] = -angles[1]
+        r = Rotation.from_euler("xyz", angles=angles[:3], degrees=True)
         rotation_matrix = r.as_matrix()
         new_positions = [0, 0, -1] @ rotation_matrix.T
         return np.array(angles), new_positions
