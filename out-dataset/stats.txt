@@ -1,0 +1,3 @@
+Correct count: 59
+Total count: 118
+Accuracy: 0.5
