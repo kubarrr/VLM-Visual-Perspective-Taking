@@ -70,8 +70,11 @@ class OrientAnythingModelWrapper:
         angles = get_3angle(img, self.dino_mlp, self.processor, self.device)
         angles[:3] = reversed(angles[:3])
         angles[2] = angles[2] - 180
-        r = Rotation.from_euler("ZXY", angles=angles[:3], degrees=True)
+        angles[1] = -angles[1]
+        r = Rotation.from_euler("zxy", angles=angles[:3], degrees=True)
         rotation_matrix = r.as_matrix()
+        idx = [1,0] + list(range(2, rotation_matrix.shape[0]))
+        rotation_matrix = rotation_matrix[:, idx][idx, :]
         new_positions = [0, 0, 1] @ rotation_matrix.T
         return np.array(angles), new_positions
 
