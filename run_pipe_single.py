@@ -35,7 +35,7 @@ if __name__ == "__main__":
     img = Image.open(img_path).convert("RGB")
     
     # run
-    a = vlm_extended.ask_question_with_perspective(q, img, perspective_type=PERSPECTIVE_TYPE.NUMERICAL, save_intermediate=True)
+    a = vlm_extended.ask_question_with_perspective(q, img, perspective_type=PERSPECTIVE_TYPE.NUMERICAL, save_intermediate_name="intermediate")
     
 
     

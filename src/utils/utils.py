@@ -34,7 +34,7 @@ def change_points_basis(
     """
     euler_angles[0] = euler_angles[0] - 180
     euler_angles[1] = -euler_angles[1]
-    r = Rotation.from_euler("zxy", angles=reversed(euler_angles[:3]), degrees=True)
+    r = Rotation.from_euler("zxy", angles=[euler_angles[2], euler_angles[1], euler_angles[0]], degrees=True)
     rotation_matrix = r.as_matrix()
     idx = [1,0] + list(range(2, rotation_matrix.shape[0]))
     rotation_matrix = rotation_matrix[:, idx][idx, :]
