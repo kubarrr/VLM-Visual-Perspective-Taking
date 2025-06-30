@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import numpy as np
 
 def get_3angle(image, dino, val_preprocess, device):
-    
+ 
     # image = Image.open(image_path).convert('RGB')
     image_inputs = val_preprocess(images = image)
     image_inputs['pixel_values'] = torch.from_numpy(np.array(image_inputs['pixel_values'])).to(device)

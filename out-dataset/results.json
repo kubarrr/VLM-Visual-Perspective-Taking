@@ -1,0 +1,592 @@
+{
+    "0": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "1": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "2": {
+        "prompt": "is the cat present in the image?",
+        "label": 1,
+        "answer": 1
+    },
+    "3": {
+        "prompt": "is the cat present in the image?",
+        "label": 0,
+        "answer": 1
+    },
+    "4": {
+        "prompt": "is the camera present in the image?",
+        "label": 1,
+        "answer": 0
+    },
+    "5": {
+        "prompt": "is the plant present in the image?",
+        "label": 1,
+        "answer": 1
+    },
+    "7": {
+        "prompt": "is the bat present in the image?",
+        "label": 1,
+        "answer": 1
+    },
+    "8": {
+        "prompt": "is the dagger present in the image?",
+        "label": 0,
+        "answer": 1
+    },
+    "9": {
+        "prompt": "is the chair present in the image?",
+        "label": 1,
+        "answer": 1
+    },
+    "10": {
+        "prompt": "is the cat present in the image?",
+        "label": 0,
+        "answer": 1
+    },
+    "11": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the dagger in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "12": {
+        "prompt": "is the cat present in the image?",
+        "label": 0,
+        "answer": 1
+    },
+    "13": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "14": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "15": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "16": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "17": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "18": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "19": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "20": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "21": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the dagger in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "22": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pot in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "23": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pretzel in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "24": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the dagger in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "25": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "26": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the camera in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "27": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "28": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "29": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the chair in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "30": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "31": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pretzel in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "32": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cup in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "33": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "34": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "35": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the chair in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "36": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "37": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cup in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "38": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the camera in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "39": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "40": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the green pot in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "41": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the dagger in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "42": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "43": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pretzel in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "44": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "45": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "46": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "47": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the chair in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "48": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "49": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the camera in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "50": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "51": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pot in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "52": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pretzel in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "53": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the dagger in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "54": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the chair in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "55": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cap in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "56": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "57": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "58": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "59": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "60": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "61": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cap in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "62": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the camera in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "63": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the camera in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "64": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "65": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "66": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cup in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "67": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cup in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "68": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the chair in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "69": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the chair in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "70": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the dagger in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "71": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "72": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the dagger in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "73": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "74": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "75": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pretzel in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "76": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pretzel in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "77": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "78": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "79": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pot in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "81": {
+        "prompt": "assuming the lego minifigure with yellow t-shirt has the ability to see, can it see the chair in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "82": {
+        "prompt": "assuming the bald lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "83": {
+        "prompt": "assuming the lego minifigure with brown hairhas the ability to see, can it see the bat in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "84": {
+        "prompt": "assuming the lego minifigure with chicken hat has the ability to see, can it see the camera in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "85": {
+        "prompt": "assuming the lego minifigure with rabbit hat has the ability to see, can it see the camera in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "86": {
+        "prompt": "assuming the bald lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "87": {
+        "prompt": "assuming the bald lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "88": {
+        "prompt": "assuming the lego minifigure with rabbit hat has the ability to see, can it see the pretzel in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "89": {
+        "prompt": "assuming the lego minifigure with yellow t-shirt has the ability to see, can it see the pretzel in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "90": {
+        "prompt": "assuming the lego minifigure with pink t-shirt has the ability to see, can it see the cup in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "91": {
+        "prompt": "assuming the lego minifigure with black hair has the ability to see, can it see the plant in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "92": {
+        "prompt": "assuming the lego minifigure with blond hair has the ability to see, can it see the cup in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "93": {
+        "prompt": "assuming the lego minifigure with black hair has the ability to see, can it see the pot in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "94": {
+        "prompt": "assuming the lego minifigure with black hair has the ability to see, can it see the pot in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "95": {
+        "prompt": "assuming the lego minifigure with rabbit hat has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "96": {
+        "prompt": "assuming the lego minifigure with rabbit hat has the ability to see, can it see the cat in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "97": {
+        "prompt": "assuming the lego minifigure with pink t-shirt has the ability to see, can it see the dagger in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "98": {
+        "prompt": "assuming the lego minifigure with pink t-shirt has the ability to see, can it see the dagger in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "99": {
+        "prompt": "assuming the lego minifigure with yellow t-shirt has the ability to see, can it see the chair in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "100": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "101": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the camera in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "102": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pot in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "103": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pot in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "104": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the chair in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "105": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the camera in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "106": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "107": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the cat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "108": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "109": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "110": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "111": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the plant in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "112": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the umbrella in the picture?",
+        "label": 0,
+        "answer": 0
+    },
+    "113": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pretzel in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "114": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pretzel in the picture?",
+        "label": 0,
+        "answer": 1
+    },
+    "115": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the pot in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "116": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the chair in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "117": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 1,
+        "answer": 1
+    },
+    "118": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the bat in the picture?",
+        "label": 1,
+        "answer": 0
+    },
+    "119": {
+        "prompt": "assuming the lego minifigure has the ability to see, can it see the dagger in the picture?",
+        "label": 0,
+        "answer": 1
+    }
+}

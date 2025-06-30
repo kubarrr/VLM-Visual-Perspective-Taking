@@ -17,3 +17,13 @@ output
 img0.png
 img20.png
 obrazek*
+image-*.jpg
+image_*.jpg
+cropped_image.jpg
+intermediate*.png
+project.log
+wynik.png
+image.jpg
+.DS_Store
+soeur.jpeg
+soeur2.jpeg
