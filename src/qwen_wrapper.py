@@ -24,7 +24,8 @@ class QwenWrapper:
             # attn_implementation="flash_attention_2",
             device_map="auto",
         )
-        self.model.to(self.device)
+        if self.device != "cpu":
+            self.model.to(self.device)
         self.logger.info(f"Model loaded to {self.device}.")
 
     def unload(self):
@@ -55,7 +56,8 @@ class QwenWrapper:
             padding=True,
             return_tensors="pt",
         )
-        inputs = inputs.to(self.device)
+        if self.device != "cpu":
+            inputs = inputs.to(self.device)
         generated_ids = self.model.generate(**inputs, max_new_tokens=128)
         generated_ids_trimmed = [
             out_ids[len(in_ids) :]
