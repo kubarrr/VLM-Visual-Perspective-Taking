@@ -85,7 +85,7 @@ class ExternalVisionModule:
             positions.append((
                 float(Y_cam),
                 float(X_cam),
-                float(z_depth)
+                float(-z_depth)
             ))
         results = {
             "positions": np.asarray(positions), # [N x (y, x, z)]

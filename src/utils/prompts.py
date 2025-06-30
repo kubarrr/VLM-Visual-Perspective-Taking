@@ -68,7 +68,7 @@ Given the above {source}'s coordinate
 system and the object coordinates, please
 answer the following question:
 [Question] {question}
-Answer in single sentece
+Answer in one word: yes / no
 """)
 
 if __name__ == "__main__":
