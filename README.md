@@ -1,4 +1,4 @@
-#NLP Univeristy of Warsaw research project.
+# NLP Univeristy of Warsaw research project.
 
 ## Our work:
 [vpt_paper.pdf](vpt_our_research_paper.pdf)
