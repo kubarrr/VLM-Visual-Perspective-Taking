@@ -6,6 +6,6 @@ git clone git@github.com:michalpiasecki0/visual-perspective-taking-project.git &
 # in case you want uv as manager
 uv init && uv sync
 ```
-Our article:
-[vpt_article.pdf](vpt_article.pdf)
+Our work:
+[vpt_article.pdf](vpt_our_research_paper.pdf)
 
