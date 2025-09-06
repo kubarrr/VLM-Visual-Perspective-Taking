@@ -1,11 +1,4 @@
-# visual-perspective-taking-project
-
-## Get started
-```bash
-git clone git@github.com:michalpiasecki0/visual-perspective-taking-project.git && cd visual-perspective-taking-project`
-# in case you want uv as manager
-uv init && uv sync
-```
+NLP Univeristy of Warsaw research project
 
 ## Our work:
 [vpt_paper.pdf](vpt_our_research_paper.pdf)
