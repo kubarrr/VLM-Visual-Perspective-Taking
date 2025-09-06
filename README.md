@@ -7,6 +7,9 @@ git clone git@github.com:michalpiasecki0/visual-perspective-taking-project.git &
 uv init && uv sync
 ```
 
-
 Additional:
 * paper: https://arxiv.org/abs/2504.17207
+
+Our article:
+[Our article.pdf](https://github.com/user-attachments/files/22188791/Our.article.pdf)
+
