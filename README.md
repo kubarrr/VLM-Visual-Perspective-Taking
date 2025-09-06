@@ -11,7 +11,7 @@ uv init && uv sync
 [vpt_paper.pdf](vpt_our_research_paper.pdf)
 
 ## Abstract 
-We present the results of an academic project focused on enhancing visual perspective-taking abilities in Vision Language Models (VLMs). We replicate the APC-VLM (Attribute-Partitioned
+We present the results of an academic project focused on enhancing visual perspective-taking abilities in Vision Language Models (VLMs). We replicate the APC-VLM (Attribute-Partitioned
 Concept Vision-Language Model) framework, originally designed to simulate
 human-like mental transformations of
 scenes via abstract 3D representations.
